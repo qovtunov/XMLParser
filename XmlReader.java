@@ -18,10 +18,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+
 import java.util.stream.Stream;
 
 
+
 public class XmlReader {
+
+
 
     static String live = "live.xml";
     static String stag = "stage.xml";
@@ -33,6 +37,8 @@ public class XmlReader {
 
 
     void XmlReader(String file) throws FileNotFoundException {
+
+
 
 
         try {
@@ -68,12 +74,12 @@ public class XmlReader {
                     }
 
                     // comment if Desktop
-                    /*sb = sb.deleteCharAt(sb.length() - 1);
+                    sb = sb.deleteCharAt(sb.length() - 1);
                     if (prodMob == 1) {
                         sb.insert(17, "mobile/?"); //17 27
                     } else if (stageMob == 1) {
                         sb.insert(27, "mobile/?");
-                    }*/
+                    }
                     //
 
                     String stopLink = "http://appery.io/case-studies/attachment/majoruscitywater-case-study/";

@@ -19,6 +19,9 @@ import java.util.concurrent.TimeUnit;
  */
 public class GTmetrix {
 
+    String currentLink;
+    int j = 0;
+
     static List<String> compareUrls = new ArrayList<>();
 
     void metrix() throws FileNotFoundException, AWTException, InterruptedException {
@@ -32,7 +35,7 @@ public class GTmetrix {
         for (String i : XmlReader.urls) {
 
             ffdriver.get("http://gtmetrix.com/");
-
+            currentLink = i;
             System.out.println("URL: " + i);
 
             WebElement urlTextBox = (new WebDriverWait(ffdriver, 60))
@@ -77,7 +80,7 @@ public class GTmetrix {
 
         XmlReader.urls.clear();
         XmlReader newXmlReader = new XmlReader();
-        newXmlReader.XmlReader(XmlReader.stag);
+        newXmlReader.XmlReader(XmlReader.live);
         System.out.println(XmlReader.urls.toString());
         System.out.println(compareUrls.toString());
 
@@ -85,6 +88,7 @@ public class GTmetrix {
         for (String i : compareUrls) {
 
             ffdriver.get(i);
+            currentLink = XmlReader.urls.get(j);
 
             WebElement compareUrlLink = (new WebDriverWait(ffdriver, 60))
                     .ignoring(NoSuchElementException.class)
@@ -99,9 +103,7 @@ public class GTmetrix {
             anotherUrlBox.sendKeys(XmlReader.urls.get(j));
             ffdriver.findElement(By.xpath(".//*[@id='compare-modal']/form/button[1]")).click();
 
-            WebElement compareUrlReport = (new WebDriverWait(ffdriver, 60))
-                    .ignoring(NoSuchElementException.class)
-                    .pollingEvery(1, TimeUnit.SECONDS)
+            new WebDriverWait(ffdriver, 60).ignoring(NoSuchElementException.class).pollingEvery(1, TimeUnit.SECONDS)
                     .until(ExpectedConditions.presenceOfElementLocated(By.xpath("html/body/div[2]/div[1]/div[1]/h1")));
 
             String a1 = ffdriver.findElement(By.xpath("html/body/div[2]/div[2]/div[1]/label[1]")).getText();
@@ -119,16 +121,18 @@ public class GTmetrix {
             String c1 = ffdriver.findElement(By.xpath("html/body/div[2]/div[2]/div[3]/div/span[1]")).getText();
             String c2 = ffdriver.findElement(By.xpath("html/body/div[2]/div[2]/div[3]/div/span[2]")).getText();
             String c3 = ffdriver.findElement(By.xpath("html/body/div[2]/div[2]/div[3]/span[1]")).getText();
-            String c4 = ffdriver.findElement(By.xpath("html/body/div[2]/div[2]/div[3]/span[2]")).getText();
-            String c5 = ffdriver.findElement(By.xpath("html/body/div[2]/div[2]/div[3]/span[3]")).getText();
-
-
-
-
+            String c4 = ffdriver.findElement(By.xpath("html/body/div[2]/div[2]/div[3]/span[3]")).getText();
+            String c5 = ffdriver.findElement(By.xpath("html/body/div[2]/div[2]/div[3]/span[5]")).getText();
 
             System.out.println(ffdriver.getCurrentUrl());
-            //fileWriter.println(ffdriver.getCurrentUrl() + "\n" + "," + a + "," + "," + b + "," + c);
-            fileWriter.println(ffdriver.getCurrentUrl() + "\n" + "," + a1 + "," + "," + b1 + "," + c1);
+            fileWriter.println(currentLink);
+            fileWriter.println(ffdriver.getCurrentUrl());
+            fileWriter.println(a1 + ","  + b1 + "," + c1);
+            fileWriter.println(a2 + ","  + b2 + "," + c2);
+            fileWriter.println(a3 + ","  + b3 + "," + c3);
+            fileWriter.println(a4 + ","  + b4 + "," + c4);
+            fileWriter.println(a5 + ","  + b5 + "," + c5 + "\n");
+
             j++;
         }
 

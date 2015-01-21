@@ -1,10 +1,23 @@
+
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public  class Main {
+
+    private static final Logger logger = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) throws Exception  {
 
+        //logger.info("trace - Entering...");
+
+
         //Driver.launchDriver();
         XmlReader newXmlReader = new XmlReader();
-        newXmlReader.XmlReader(XmlReader.live);
+        newXmlReader.XmlReader(XmlReader.stag);
+        logger.error("error - BAD!");
+        logger.trace("trace - Finish...");
+
         //PageNotFoundCheck newCheck = new PageNotFoundCheck();
         //newCheck.pageNotFoundCheck();
         //newXmlReader.readFromFile();
